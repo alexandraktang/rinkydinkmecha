@@ -12,11 +12,13 @@ public class MovementController : MonoBehaviour
 
     // Hip Rotation
     [SerializeField] GameObject hips;
+    [SerializeField] Rigidbody hipsRb;
     float hipRotationSpeed = 30f;
     
 
     // View Rotation Variables
     [SerializeField] GameObject upperBody;
+    [SerializeField] Rigidbody upperBodyRb;
     float viewRotationSpeed = 15f;
 
     // Start is called before the first frame update
@@ -30,15 +32,27 @@ public class MovementController : MonoBehaviour
     {
         // View Rotation
         if (Input.GetKey(KeyCode.LeftArrow)) {
+            Debug.Log("Pressed left");
+            // Quaternion rotationAngle = Quaternion.Euler(0, 0, -Time.deltaTime * viewRotationSpeed);
+            // upperBodyRb.MoveRotation(rotationAngle);
             upperBody.transform.Rotate(0, 0, -Time.deltaTime * viewRotationSpeed);
         }
         else if (Input.GetKey(KeyCode.RightArrow)) {
+            Debug.Log("Pressed right");
+            // Quaternion rotationAngle = Quaternion.Euler(0, 0, Time.deltaTime * viewRotationSpeed);
+            // upperBodyRb.MoveRotation(rotationAngle);
             upperBody.transform.Rotate(0, 0, Time.deltaTime * viewRotationSpeed);
         }
         else if (Input.GetKey(KeyCode.UpArrow)) {
+            Debug.Log("Pressed up");
+            // Quaternion rotationAngle = Quaternion.Euler(0, Time.deltaTime * viewRotationSpeed, 0);
+            // upperBodyRb.MoveRotation(rotationAngle);
             upperBody.transform.Rotate(0, Time.deltaTime * viewRotationSpeed, 0);
         }
         else if(Input.GetKey(KeyCode.DownArrow)) {
+            Debug.Log("Pressed down");
+            // Quaternion rotationAngle = Quaternion.Euler(0, -Time.deltaTime * viewRotationSpeed, 0);
+            // upperBodyRb.MoveRotation(rotationAngle);
             upperBody.transform.Rotate(0, -Time.deltaTime * viewRotationSpeed, 0);
         }
 
@@ -50,6 +64,8 @@ public class MovementController : MonoBehaviour
             float spd = Time.deltaTime * walkSpeed;
 
             newPosition = hips.transform.right * spd;
+            // upperBodyRb.MovePosition(-newPosition);
+            // hipsRb.MovePosition(-newPosition);
             mech.transform.position -= newPosition;
         }
         else if (Input.GetKey(KeyCode.S)) {
