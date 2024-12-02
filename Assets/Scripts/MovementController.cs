@@ -15,11 +15,12 @@ public class MovementController : MonoBehaviour
     [SerializeField] Rigidbody hipsRb;
     float hipRotationSpeed = 30f;
     
-
     // View Rotation Variables
     [SerializeField] GameObject upperBody;
     [SerializeField] Rigidbody upperBodyRb;
     float viewRotationSpeed = 15f;
+    float newZRot = 0;
+    float newYRot = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -33,20 +34,23 @@ public class MovementController : MonoBehaviour
         // View Rotation
         if (Input.GetKey(KeyCode.LeftArrow)) {
             Debug.Log("Pressed left");
-            // Quaternion rotationAngle = Quaternion.Euler(0, 0, -Time.deltaTime * viewRotationSpeed);
-            // upperBodyRb.MoveRotation(rotationAngle);
-            upperBody.transform.Rotate(0, 0, -Time.deltaTime * viewRotationSpeed);
+            newZRot += upperBodyRb.rotation.z - (Time.deltaTime * viewRotationSpeed);
+            Quaternion rotationAngle = Quaternion.Euler(-90 + upperBodyRb.rotation.x, upperBodyRb.rotation.y, newZRot);
+            upperBodyRb.MoveRotation(rotationAngle);
+            // upperBody.transform.Rotate(0, 0, -Time.deltaTime * viewRotationSpeed);
         }
         else if (Input.GetKey(KeyCode.RightArrow)) {
             Debug.Log("Pressed right");
-            // Quaternion rotationAngle = Quaternion.Euler(0, 0, Time.deltaTime * viewRotationSpeed);
-            // upperBodyRb.MoveRotation(rotationAngle);
-            upperBody.transform.Rotate(0, 0, Time.deltaTime * viewRotationSpeed);
+            newZRot -= upperBodyRb.rotation.z - (Time.deltaTime * viewRotationSpeed);
+            Quaternion rotationAngle = Quaternion.Euler(-90 + upperBodyRb.rotation.x, upperBodyRb.rotation.y, newZRot);
+            upperBodyRb.MoveRotation(rotationAngle);
+            // upperBody.transform.Rotate(0, 0, Time.deltaTime * viewRotationSpeed);
         }
         else if (Input.GetKey(KeyCode.UpArrow)) {
             Debug.Log("Pressed up");
-            // Quaternion rotationAngle = Quaternion.Euler(0, Time.deltaTime * viewRotationSpeed, 0);
-            // upperBodyRb.MoveRotation(rotationAngle);
+            //newYRot -= upperBodyRb.rotation.y - (Time.deltaTime * viewRotationSpeed);
+            //Quaternion rotationAngle = Quaternion.Euler(-90 + upperBodyRb.rotation.x, newYRot, upperBodyRb.rotation.z);
+            //upperBodyRb.MoveRotation(rotationAngle);
             upperBody.transform.Rotate(0, Time.deltaTime * viewRotationSpeed, 0);
         }
         else if(Input.GetKey(KeyCode.DownArrow)) {
